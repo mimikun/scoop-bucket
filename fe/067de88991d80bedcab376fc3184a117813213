@@ -1,0 +1,45 @@
+bucket/plemoljp-hs.json
+  s_858a51c72e5a37::t_2d0b7d462804fb 1-96
+bucket/udev-gothic-hs.json
+  s_858a51c72e5a37::t_f97c8dea8e1b34 1-96
+bucket/plemoljp.json
+  s_858a51c72e5a37::t_cb80c1325c3cb4 1-96
+bucket/udev-gothic-nf.json
+  s_858a51c72e5a37::t_74ac497836d368 1-96
+bucket/firge.json
+  s_858a51c72e5a37::t_d7888161ae881b 1-96
+bucket/plemoljp-nf.json
+  s_858a51c72e5a37::t_be2668ae015781 1-96
+bucket/udev-gothic.json
+  s_858a51c72e5a37::t_196e690abb8afb 1-96
+bucket/cica.json
+  s_858a51c72e5a37::t_86141a5aa9e02f 1-96
+.github/workflows/schedule.yml
+  s_858a51c72e5a37::t_cf2ca9f0df7f70 1-23
+bucket/hackgen-nf.json
+  s_858a51c72e5a37::t_338b47506ccce8 1-96
+LICENSE
+  s_858a51c72e5a37::t_368dfc18561b55 1-21
+README.md
+  s_858a51c72e5a37::t_5233c8f8dd3b13 1-71
+bucket/hackgen.json
+  s_858a51c72e5a37::t_9274cce18a7979 1-96
+bucket/firge-nf.json
+  s_858a51c72e5a37::t_419b617a935ab5 1-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "fe067de88991d80bedcab376fc3184a117813213",
+  "prompts": {},
+  "sessions": {
+    "s_858a51c72e5a37": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d4540ddc-518a-4bff-aa78-5c7476070d14",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Yuto Tanaka <git@mimikun.dev>"
+    }
+  }
+}
