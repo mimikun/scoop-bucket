@@ -1,9 +1,15 @@
 name: Excavator
 
 on:
-  # runs every hour
+  # Monthly, on the 1st at 03:00 UTC (12:00 JST).
+  #
+  # Hourly is what the reference buckets use, but upstream here releases on a scale of
+  # years - Cica last shipped in 2022, Firge in 2023, HackGen in 2024 - so polling five
+  # repositories 8760 times a year to catch fewer than five releases is disproportionate.
+  #
+  # The monthly interval also has to stay under 60 days for the heartbeat below to work.
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 3 1 * *"
   # allow manually trigger
   workflow_dispatch:
 
@@ -21,3 +27,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_UPDATED: "1"
+      - name: Heartbeat
+        shell: bash
+        run: |
+          # GitHub disables scheduled workflows in public repositories after 60 days with no
+          # repository activity, and only new commits reset that timer - workflow runs, issues
+          # and PRs do not count. This bucket produces commits only when an upstream font is
+          # released, which happens far less often than every 60 days, so without this step the
+          # schedule would be switched off and stay off, silently.
+          #
+          # Writing the run time on every run keeps the timer reset and, just as importantly,
+          # puts "the last time Excavator was alive" in the commit log, where it can be read at
+          # a glance instead of paged through in the Actions tab.
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          date -u '+%Y-%m-%dT%H:%M:%SZ' > .excavator-last-run
+          git add .excavator-last-run
+          git commit -m "chore: excavator heartbeat"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"

@@ -46,8 +46,10 @@ scoop install nerd-fonts/NerdFontsSymbolsOnly
 
 ## Staying current
 
-[Excavator](https://github.com/ScoopInstaller/GithubActions) runs hourly, follows each
-upstream's releases, and commits new versions and hashes on its own. **This is the point of
+[Excavator](https://github.com/ScoopInstaller/GithubActions) runs monthly, follows each
+upstream's releases, and commits new versions and hashes on its own. Monthly rather than
+hourly because upstream here releases on a scale of years — Cica last shipped in 2022, Firge
+in 2023, HackGen in 2024. **This is the point of
 the bucket.** A manifest with `checkver`/`autoupdate` but no CI behind it goes stale exactly
 like a hand-installed font does — that is how the `cica` manifest in another bucket ended up
 pinned two patch versions behind its own upstream.
@@ -75,3 +77,18 @@ directly from its upstream release.
 
 Every font packaged here is licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL)
 by its own author. Their license terms, not this repository's, govern the fonts themselves.
+
+## Heartbeat
+
+Every run writes its timestamp to `.excavator-last-run` and commits it, which exists for two
+reasons.
+
+GitHub disables scheduled workflows in public repositories after **60 days with no repository
+activity**, and only new commits reset that timer — workflow runs, issues and pull requests do
+not count. A bucket that commits only when an upstream font is released will cross 60 quiet
+days as a matter of course, and the schedule would then be switched off and stay off without
+announcing itself. The monthly interval is chosen to stay comfortably under that limit.
+
+The second reason is that it makes the answer readable. "Is this bucket still being updated?"
+becomes `git log` rather than paging through the Actions tab, and a heartbeat that stops
+appearing is visible in the same place the manifests live.
