@@ -55,6 +55,12 @@ pinned two patch versions behind its own upstream.
 If the workflow ever stops running, this bucket is worse than nothing, because it looks
 maintained. Check the Actions tab before trusting it.
 
+It was verified end to end on 2026-08-09 rather than assumed: a manifest was deliberately
+downgraded (`cica` to 5.0.2) and pushed, and the bot restored it to 5.0.3 within a minute
+with a correctly recomputed hash. Both commits are still in the history. A quiet run log is
+not evidence either way — `SKIP_UPDATED` prints nothing when every manifest is current, so
+the only way to tell a working Excavator from a dead one is to break something and watch.
+
 ## Note on `-Recurse`
 
 The font installer scans for `*.ttf` recursively. These archives nest their fonts under a
